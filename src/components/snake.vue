@@ -2,6 +2,10 @@
   <div class="snake">
     <div class="snake-field">
       <div class="start-game" v-if="startShow">
+        <div v-if="bestResultGame" class="best-result-game">
+          Ваш лучший результат:
+          <span class="best-result-game__total">{{ bestResultGame }}</span>
+        </div>
         <div class="start-game__title">Выберите уровень сложности:</div>
         <form class="form">
           <div class="form__item" v-for="(item, index) in levels" :key="index">
@@ -109,6 +113,11 @@
 </template>
 
 <script>
+import {
+  updateBestResultGame,
+  getBestResultGame,
+} from "../localStorage/bestResultGame";
+
 export default {
   name: "Snake",
 
@@ -122,9 +131,10 @@ export default {
       speed: 600,
       prohibitionAbruptActions: true,
       total: 0,
-      winningScore: 10,
+      winningScore: 35,
       endGameShow: false,
       winGameShow: false,
+      bestResultGame: false,
       interval: null,
       widthWindow: window.innerWidth,
       levels: [
@@ -360,6 +370,9 @@ export default {
         this.foodIndex = [];
         this.direction = "ArrowRight";
       }
+
+      updateBestResultGame(this.total);
+      this.bestResultGame = getBestResultGame();
     },
 
     // Победа в игре
@@ -371,6 +384,9 @@ export default {
         this.foodIndex = [];
         this.direction = "ArrowRight";
       }
+
+      updateBestResultGame(this.total);
+      this.bestResultGame = getBestResultGame();
     },
   },
 
@@ -392,6 +408,8 @@ export default {
         vue.moveSnake("ArrowDown");
       }
     });
+
+    this.bestResultGame = getBestResultGame();
   },
 };
 </script>
@@ -445,6 +463,16 @@ export default {
     }
   }
 
+  .best-result-game {
+    margin-bottom: 30px;
+    color: #00dd00;
+
+    &__total {
+      font-size: 30px;
+      font-weight: bold;
+    }
+  }
+
   .start-game {
     position: absolute;
     top: 50%;
@@ -456,7 +484,7 @@ export default {
     padding: 30px;
     border-radius: 10px;
     border: 0.5px solid #f6f9f8;
-    width: 40%;
+    width: 60%;
     min-width: 200px;
     color: var(--color-1);
     font-size: 25px;
