@@ -177,6 +177,22 @@ export default {
       }
     },
 
+    // определение направления движения змейки
+    snakeMovements(event) {
+      if (event.key === "ArrowRight") {
+        this.moveSnake("ArrowRight");
+      }
+      if (event.key === "ArrowLeft") {
+        this.moveSnake("ArrowLeft");
+      }
+      if (event.key === "ArrowUp") {
+        this.moveSnake("ArrowUp");
+      }
+      if (event.key === "ArrowDown") {
+        this.moveSnake("ArrowDown");
+      }
+    },
+
     // Движение змейки
     changePosition() {
       this.interval = setInterval(() => {
@@ -391,25 +407,14 @@ export default {
   },
 
   mounted() {
-    let vue = this;
-
     // Привязка движения змейки к стрелкам клавиатуры
-    document.addEventListener("keydown", function (event) {
-      if (event.key === "ArrowRight") {
-        vue.moveSnake("ArrowRight");
-      }
-      if (event.key === "ArrowLeft") {
-        vue.moveSnake("ArrowLeft");
-      }
-      if (event.key === "ArrowUp") {
-        vue.moveSnake("ArrowUp");
-      }
-      if (event.key === "ArrowDown") {
-        vue.moveSnake("ArrowDown");
-      }
-    });
+    document.addEventListener("keydown", this.snakeMovements);
 
     this.bestResultGame = getBestResultGame();
+  },
+
+  beforeDestroy() {
+    document.removeEventListener("keydown", this.snakeMovements);
   },
 };
 </script>
