@@ -179,18 +179,16 @@ export default {
 
     // определение направления движения змейки
     snakeMovements(event) {
-      if (event.key === "ArrowRight") {
-        this.moveSnake("ArrowRight");
+      if (
+        event.key != "ArrowRight" &&
+        event.key != "ArrowLeft" &&
+        event.key != "ArrowUp" &&
+        event.key != "ArrowDown"
+      ) {
+        return;
       }
-      if (event.key === "ArrowLeft") {
-        this.moveSnake("ArrowLeft");
-      }
-      if (event.key === "ArrowUp") {
-        this.moveSnake("ArrowUp");
-      }
-      if (event.key === "ArrowDown") {
-        this.moveSnake("ArrowDown");
-      }
+
+      this.moveSnake(event.key);
     },
 
     // Движение змейки
@@ -385,10 +383,9 @@ export default {
         this.snakePiece = [];
         this.foodIndex = [];
         this.direction = "ArrowRight";
+        updateBestResultGame(this.total);
+        this.bestResultGame = getBestResultGame();
       }
-
-      updateBestResultGame(this.total);
-      this.bestResultGame = getBestResultGame();
     },
 
     // Победа в игре
@@ -399,10 +396,10 @@ export default {
         this.snakePiece = [];
         this.foodIndex = [];
         this.direction = "ArrowRight";
-      }
 
-      updateBestResultGame(this.total);
-      this.bestResultGame = getBestResultGame();
+        updateBestResultGame(this.total);
+        this.bestResultGame = getBestResultGame();
+      }
     },
   },
 
