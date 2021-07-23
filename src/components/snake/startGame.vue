@@ -2,18 +2,22 @@
   <div class="start-game" v-if="startShow">
     <div v-if="bestResultGame" class="best-result-game">
       Ваш лучший результат:
-      <span class="best-result-game__total">{{ bestResultGame }}</span>
+      <span class="best-result-game__total">bestResultGame</span>
     </div>
     <div class="start-game__title">Выберите уровень сложности:</div>
     <form class="form">
-      <div class="form__item" v-for="(item, index) in levels" :key="index">
-        <label @click="changeLevel(item.id)"
+      <div
+        class="form__item"
+        v-for="(level, index) in logic.levels"
+        :key="index"
+      >
+        <label @click="changeLevel(level.id)"
           ><span
             class="form__title"
             :class="{
-              active: item.id === selectLevel,
+              active: level.id === selectLevel,
             }"
-            >{{ item.title }}</span
+            >{{ level.title }}</span
           >
           <input class="form__input" type="radio" name="level" />
         </label>
@@ -35,12 +39,15 @@
 </template>
 
 <script>
+import logic from "./logic.js";
+
 export default {
   name: "startGame",
 
   data: () => ({
     selectLevel: "easy",
     widthWindow: window.innerWidth,
+    logic: logic,
   }),
 
   props: {
@@ -53,17 +60,12 @@ export default {
       type: Boolean,
       default: false,
     },
-
-    levels: {
-      type: Array,
-      default: () => [],
-    },
   },
 
   methods: {
     changeLevel(id) {
       this.selectLevel = id;
-      this.$emit("changeLevel", id);
+      logic.changeLevel(id);
     },
 
     startGame() {

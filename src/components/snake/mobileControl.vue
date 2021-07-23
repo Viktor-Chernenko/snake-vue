@@ -2,25 +2,25 @@
   <div class="arrow-box">
     <button
       class="arrow-box__item arrow-box-left"
-      @click="directionOfMovement('ArrowLeft')"
+      @click="logic.moveSnake('ArrowLeft')"
     >
       >
     </button>
     <button
       class="arrow-box__item arrow-box-up"
-      @click="directionOfMovement('ArrowUp')"
+      @click="logic.moveSnake('ArrowUp')"
     >
       >
     </button>
     <button
       class="arrow-box__item arrow-box-down"
-      @click="directionOfMovement('ArrowDown')"
+      @click="logic.moveSnake('ArrowDown')"
     >
       >
     </button>
     <button
       class="arrow-box__item arrow-box-right"
-      @click="directionOfMovement('ArrowRight')"
+      @click="logic.moveSnake('ArrowRight')"
     >
       >
     </button>
@@ -28,11 +28,13 @@
 </template>
 
 <script>
+import logic from "./logic.js";
+
 export default {
-  methods: {
-    directionOfMovement(direction) {
-      this.$emit("directionOfMovement", direction);
-    },
+  data: () => {
+    return {
+      logic: logic,
+    };
   },
 };
 </script>

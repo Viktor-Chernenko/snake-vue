@@ -2,7 +2,7 @@
   <div class="game-win" v-if="winGameShow">
     <div class="game-win__title">Поздравляю</div>
     <div class="game-win__text">Вы выйграли +1 к карме</div>
-    <button class="restart-btn" @click.prevent="startOver">
+    <button class="restart-btn" @click.prevent="clickRestart">
       НАЧАТЬ ЗАНОВО
     </button>
   </div>
@@ -20,8 +20,8 @@ export default {
   },
 
   methods: {
-    startOver() {
-      this.$emit("startOver");
+    clickRestart() {
+      this.$emit("clickRestart");
     },
   },
 };

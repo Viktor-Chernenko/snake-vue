@@ -5,31 +5,34 @@
     </div>
     <div class="end-game__item">
       <span class="end-game__title">ВАШ РЕЗУЛЬТАТ:</span>
-      <span class="end-game__number">{{ total }}</span>
+      <span class="end-game__number"> {{ logic.total }} </span>
     </div>
-    <button class="restart-btn" @click.prevent="startOver">
+    <button class="restart-btn" @click.prevent="clickRestart">
       НАЧАТЬ ЗАНОВО
     </button>
   </div>
 </template>
 
 <script>
+import logic from "./logic.js";
+
 export default {
+  data: () => {
+    return {
+      logic: logic,
+    };
+  },
+
   props: {
     endGameShow: {
       type: Boolean,
       default: false,
     },
-
-    total: {
-      type: Number,
-      default: 0,
-    },
   },
 
   methods: {
-    startOver() {
-      this.$emit("startOver");
+    clickRestart() {
+      this.$emit("clickRestart");
     },
   },
 };
